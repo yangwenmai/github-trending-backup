@@ -20,7 +20,7 @@ func main() {
 
 	jobs := make(chan string, 10)
 	backs := make(chan string, 10)
-	var content string
+	var content, readme string
 
 	for w := 1; w <= 5; w++ {
 		go scrape(jobs, backs)
@@ -35,8 +35,13 @@ func main() {
 	for a := 0; a < len(targets); a++ {
 		content = content + <-backs
 	}
+	content = "### " + tempDate + "\n" + content
 	//create markdown file
-	writeMarkDown(content)
+	writeMarkDown(tempDate, content)
+
+	readme = "# Scraper\n\nTracking the most popular Github repos, updated daily\nWe scrape the trending page and push a markdown everyday.\n"
+	readme = readme + "Last Updated: " + time.Now().Format("2006-01-02 15:04:05")
+	writeMarkDown("README", readme)
 	println("file is completed.")
 
 	//gitPull()
@@ -48,9 +53,9 @@ func main() {
 	//}
 }
 
-func writeMarkDown(content string) {
+func writeMarkDown(fileName, content string) {
 	// open output file
-	fo, err := os.Create(tempDate + ".md")
+	fo, err := os.Create(fileName + ".md")
 	if err != nil {
 		panic(err)
 	}
@@ -62,7 +67,6 @@ func writeMarkDown(content string) {
 	}()
 	// make a write buffer
 	w := bufio.NewWriter(fo)
-	w.WriteString("### " + tempDate + "\n")
 	w.WriteString(content)
 	w.Flush()
 }
