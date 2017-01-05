@@ -38,7 +38,7 @@ func main() {
 	content = "### " + tempDate + "\n" + content
 	//create markdown file
 	writeMarkDown(tempDate, content)
-	println("file is completed.")
+	println("file " + tempDate + ".md is completed.")
 
 	readme = "# Scraper\n\nTracking the most popular Github repos, updated daily.\n\nWe scrape the trending page and push a markdown everyday.\n\n"
 	readme = readme + "Last Updated: " + time.Now().Format("2006-01-02 15:04:05")
