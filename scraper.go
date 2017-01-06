@@ -2,8 +2,10 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 	"os/exec"
+	"strconv"
 	"strings"
 	"time"
 
@@ -30,12 +32,15 @@ func main() {
 		println(targets[j] + " is added to jobs.")
 		jobs <- targets[j]
 	}
-	close(jobs)
 
 	for a := 0; a < len(targets); a++ {
 		content = content + <-backs
 	}
 	content = "### " + tempDate + "\n" + content
+
+	close(jobs)
+	close(backs)
+
 	//create markdown file
 	writeMarkDown(tempDate, content)
 	println(tempDate + ".md is completed.")
@@ -52,6 +57,26 @@ func main() {
 
 	//	time.Sleep(time.Duration(24) * time.Hour)
 	//}
+}
+
+//interface转为string
+func interface2string(inter interface{}) string {
+	tempStr := ""
+	switch inter.(type) {
+	case string:
+		tempStr = inter.(string)
+		break
+	case float64:
+		tempStr = strconv.FormatFloat(inter.(float64), 'f', -1, 64)
+		break
+	case int64:
+		tempStr = strconv.FormatInt(inter.(int64), 10)
+		break
+	case int:
+		tempStr = strconv.Itoa(inter.(int))
+		break
+	}
+	return tempStr
 }
 
 func writeMarkDown(fileName, content string) {
@@ -72,14 +97,23 @@ func writeMarkDown(fileName, content string) {
 	w.Flush()
 }
 
-func scrape(jobs <-chan string, backs chan<- string) {
+func scrape(jobs chan string, backs chan<- string) {
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("Recovered in", r)
+			jobs <- interface2string(r)
+			go scrape(jobs, backs)
+		}
+	}()
 	for j := range jobs {
 		language := j
 		var doc *goquery.Document
 		var e error
 		result := "\n#### " + language + "\n"
+
 		if doc, e = goquery.NewDocument("https://github.com/trending?l=" + language); e != nil {
-			panic(e.Error())
+			println(e.Error())
+			panic(language)
 		}
 
 		doc.Find("ol.repo-list li").Each(func(i int, s *goquery.Selection) {
