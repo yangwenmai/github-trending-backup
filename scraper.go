@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"os"
 	"os/exec"
 	"strconv"
@@ -20,9 +19,9 @@ func main() {
 	//set monitor targets
 	targets := []string{"go", "python", "javascript", "swift", "objective-c", "ruby"}
 
+	var content, readme string
 	jobs := make(chan string, 10)
 	backs := make(chan string, 10)
-	var content, readme string
 
 	for w := 1; w <= 5; w++ {
 		go scrape(jobs, backs)
@@ -37,7 +36,7 @@ func main() {
 		content = content + <-backs
 	}
 	content = "### " + tempDate + "\n" + content
-
+	//close the channels
 	close(jobs)
 	close(backs)
 
@@ -59,7 +58,7 @@ func main() {
 	//}
 }
 
-//interface转为string
+//interface to string
 func interface2string(inter interface{}) string {
 	tempStr := ""
 	switch inter.(type) {
@@ -100,7 +99,7 @@ func writeMarkDown(fileName, content string) {
 func scrape(jobs chan string, backs chan<- string) {
 	defer func() {
 		if r := recover(); r != nil {
-			fmt.Println("Recovered in", r)
+			println("Recovered for", r)
 			jobs <- interface2string(r)
 			go scrape(jobs, backs)
 		}
@@ -112,7 +111,7 @@ func scrape(jobs chan string, backs chan<- string) {
 		result := "\n#### " + language + "\n"
 
 		if doc, e = goquery.NewDocument("https://github.com/trending?l=" + language); e != nil {
-			println(e.Error())
+			println("Error: ", e.Error())
 			panic(language)
 		}
 
