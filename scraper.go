@@ -60,7 +60,7 @@ func main() {
 
 //interface to string
 func interface2string(inter interface{}) string {
-	tempStr := ""
+	var tempStr string
 	switch inter.(type) {
 	case string:
 		tempStr = inter.(string)
