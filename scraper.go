@@ -48,7 +48,7 @@ func main() {
 	for _, v := range targets {
 		readme = readme + v + ", "
 	}
-	readme = readme + "\n\nand push a markdown everyday.\n\n"
+	readme = readme + "and push a markdown result everyday.\n\n"
 	readme = readme + "Last Updated: " + time.Now().Format("2006-01-02 15:04:05")
 	writeMarkDown("README", readme)
 	println("README.md is updated.")
