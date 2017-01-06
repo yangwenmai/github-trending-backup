@@ -99,7 +99,7 @@ func writeMarkDown(fileName, content string) {
 func scrape(jobs chan string, backs chan<- string) {
 	defer func() {
 		if r := recover(); r != nil {
-			println("Recovered for", r)
+			println("Recovered for", interface2string(r))
 			jobs <- interface2string(r)
 			go scrape(jobs, backs)
 		}
@@ -111,7 +111,7 @@ func scrape(jobs chan string, backs chan<- string) {
 		result := "\n#### " + language + "\n"
 
 		if doc, e = goquery.NewDocument("https://github.com/trending?l=" + language); e != nil {
-			println("Error: ", e.Error())
+			println("Error:", e.Error())
 			panic(language)
 		}
 
