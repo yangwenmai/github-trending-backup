@@ -44,7 +44,11 @@ func main() {
 	writeMarkDown(tempDate, content)
 	println(tempDate + ".md is completed.")
 
-	readme = "# Scraper\n\nTracking the most popular Github repos, updated daily.\n\nWe scrape the trending page and push a markdown everyday.\n\n"
+	readme = "# Scraper\n\nWe scrape the github trending page of these languages: \n\n"
+	for _, v := range targets {
+		readme = readme + v + ", "
+	}
+	readme = readme + "\n\nand push a markdown everyday.\n\n"
 	readme = readme + "Last Updated: " + time.Now().Format("2006-01-02 15:04:05")
 	writeMarkDown("README", readme)
 	println("README.md is updated.")

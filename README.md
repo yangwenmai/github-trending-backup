@@ -1,7 +1,9 @@
 # Scraper
 
-Tracking the most popular Github repos, updated daily.
+We scrape the github trending page of these languages: 
 
-We scrape the trending page and push a markdown everyday.
+go, python, javascript, swift, objective-c, ruby, 
 
-Last Updated: 2017-01-06 18:26:12
+and push a markdown everyday.
+
+Last Updated: 2017-01-06 21:27:03
