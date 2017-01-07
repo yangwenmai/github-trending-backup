@@ -1,7 +1,5 @@
 # Scraper
 
-We scrape the github trending page of these languages: 
+We scrape the github trending page of these languages: go, python, javascript, swift, objective-c, ruby, and push a markdown result everyday.
 
-go, python, javascript, swift, objective-c, ruby, and push a markdown result everyday.
-
-Last Updated: 2017-01-06 21:30:34
+Last Updated: 2017-01-07 09:05:39

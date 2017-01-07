@@ -44,7 +44,7 @@ func main() {
 	writeMarkDown(tempDate, content)
 	println(tempDate + ".md is completed.")
 
-	readme = "# Scraper\n\nWe scrape the github trending page of these languages: \n\n"
+	readme = "# Scraper\n\nWe scrape the github trending page of these languages: "
 	for _, v := range targets {
 		readme = readme + v + ", "
 	}
