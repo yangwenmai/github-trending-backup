@@ -23,7 +23,7 @@ func main() {
 	jobs := make(chan string, 10)
 	backs := make(chan string, 10)
 
-	for w := 1; w <= 5; w++ {
+	for w := 1; w <= 6; w++ {
 		go scrape(jobs, backs)
 	}
 
