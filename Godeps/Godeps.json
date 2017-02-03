@@ -1,0 +1,24 @@
+{
+	"ImportPath": "Github/Scraper",
+	"GoVersion": "go1.7",
+	"GodepVersion": "v79",
+	"Deps": [
+		{
+			"ImportPath": "github.com/PuerkitoBio/goquery",
+			"Comment": "v1.0.1-2-g152b1a2",
+			"Rev": "152b1a2c8f5d0340f658bb656032a39b94e52958"
+		},
+		{
+			"ImportPath": "github.com/andybalholm/cascadia",
+			"Rev": "196d48ce4ae8cf1c8f87088d2884eca214240887"
+		},
+		{
+			"ImportPath": "golang.org/x/net/html",
+			"Rev": "45e771701b814666a7eb299e6c7a57d0b1799e91"
+		},
+		{
+			"ImportPath": "golang.org/x/net/html/atom",
+			"Rev": "45e771701b814666a7eb299e6c7a57d0b1799e91"
+		}
+	]
+}

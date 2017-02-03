@@ -2,11 +2,16 @@ package main
 
 import (
 	"bufio"
+	"io/ioutil"
 	"os"
 	"os/exec"
 	"strconv"
 	"strings"
 	"time"
+
+	"fmt"
+
+	"regexp"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -14,7 +19,41 @@ import (
 var tempDate = time.Now().Format("2006-01-02")
 
 func main() {
-	//loop
+	fmt.Println(time.Now().Day())
+	fmt.Println(time.Now().Month())
+	today := time.Now()
+	fmt.Println(int(today.AddDate(0, -1, 0).Month()))
+	temp := today.AddDate(0, -1, 0).Format("2006/01")
+	temp2 := today.AddDate(0, -1, 0).Format("2006-01")
+	fmt.Println(temp)
+	err := os.MkdirAll(temp, 0666)
+	if err != nil {
+		panic(err)
+	}
+
+	docPath, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+	mdFiles, err := listDir(docPath, ".md")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(mdFiles)
+
+	var mdNewFiles []string
+	for _, v := range mdFiles {
+		if ok, _ := regexp.MatchString(temp2, v); ok {
+			mdNewFiles = append(mdNewFiles, v)
+		}
+	}
+	for _, v := range mdNewFiles {
+		err := os.Rename(v, temp+string(os.PathSeparator)+v)
+		if err != nil {
+			panic(err)
+		}
+	}
+	/*//loop
 	//for {
 	//set monitor targets
 	targets := []string{"go", "python", "javascript", "swift", "objective-c", "ruby"}
@@ -59,7 +98,27 @@ func main() {
 	gitPush()
 
 	//	time.Sleep(time.Duration(24) * time.Hour)
-	//}
+	//}*/
+}
+
+//listDir
+func listDir(dirPth string, suffix string) (files []string, err error) {
+	files = make([]string, 0, 10)
+	dir, err := ioutil.ReadDir(dirPth)
+	if err != nil {
+		return nil, err
+	}
+	//PthSep := string(os.PathSeparator)
+	suffix = strings.ToUpper(suffix)
+	for _, fi := range dir {
+		if fi.IsDir() {
+			continue
+		}
+		if strings.HasSuffix(strings.ToUpper(fi.Name()), suffix) {
+			files = append(files, fi.Name())
+		}
+	}
+	return files, nil
 }
 
 //interface to string
