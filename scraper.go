@@ -21,9 +21,11 @@ var tempDate = time.Now().Format("2006-01-02")
 func main() {
 	//loop
 	//for {
-	if time.Now().Day() == 3 {
-		if ok, _ := collectDocs(); ok {
+	if time.Now().Day() == 10 {
+		if ok, err := collectDocs(); ok {
 			fmt.Println("Collect the .md files: OK!")
+		} else {
+			fmt.Println("collectDocs() is failed. ", err)
 		}
 	}
 	//set monitor targets
