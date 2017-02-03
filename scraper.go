@@ -9,9 +9,9 @@ import (
 	"strings"
 	"time"
 
-	"fmt"
-
 	"regexp"
+
+	"fmt"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -19,42 +19,13 @@ import (
 var tempDate = time.Now().Format("2006-01-02")
 
 func main() {
-	fmt.Println(time.Now().Day())
-	fmt.Println(time.Now().Month())
-	today := time.Now()
-	fmt.Println(int(today.AddDate(0, -1, 0).Month()))
-	temp := today.AddDate(0, -1, 0).Format("2006/01")
-	temp2 := today.AddDate(0, -1, 0).Format("2006-01")
-	fmt.Println(temp)
-	err := os.MkdirAll(temp, 0666)
-	if err != nil {
-		panic(err)
-	}
-
-	docPath, err := os.Getwd()
-	if err != nil {
-		panic(err)
-	}
-	mdFiles, err := listDir(docPath, ".md")
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(mdFiles)
-
-	var mdNewFiles []string
-	for _, v := range mdFiles {
-		if ok, _ := regexp.MatchString(temp2, v); ok {
-			mdNewFiles = append(mdNewFiles, v)
-		}
-	}
-	for _, v := range mdNewFiles {
-		err := os.Rename(v, temp+string(os.PathSeparator)+v)
-		if err != nil {
-			panic(err)
-		}
-	}
-	/*//loop
+	//loop
 	//for {
+	if time.Now().Day() == 10 {
+		if ok, _ := collectDocs(); ok {
+			fmt.Println("Collect the .md files: OK!")
+		}
+	}
 	//set monitor targets
 	targets := []string{"go", "python", "javascript", "swift", "objective-c", "ruby"}
 
@@ -98,7 +69,40 @@ func main() {
 	gitPush()
 
 	//	time.Sleep(time.Duration(24) * time.Hour)
-	//}*/
+	//}
+}
+
+//collectDocs
+func collectDocs() (ok bool, err error) {
+	today := time.Now()
+	lastMonth := today.AddDate(0, -1, 0)
+	docName := lastMonth.Format("2006/01")
+	regType := lastMonth.Format("2006-01")
+	docPath, err := os.Getwd()
+	if err != nil {
+		return false, err
+	}
+	mdFiles, err := listDir(docPath, ".md")
+	if err != nil {
+		return false, err
+	}
+	var mdNewFiles []string
+	for _, v := range mdFiles {
+		if ok, _ := regexp.MatchString(regType, v); ok {
+			mdNewFiles = append(mdNewFiles, v)
+		}
+	}
+	err = os.MkdirAll(docName, 0666)
+	if err != nil {
+		return false, err
+	}
+	for _, v := range mdNewFiles {
+		err = os.Rename(v, docName+string(os.PathSeparator)+v)
+		if err != nil {
+			return false, err
+		}
+	}
+	return true, nil
 }
 
 //listDir
@@ -108,7 +112,6 @@ func listDir(dirPth string, suffix string) (files []string, err error) {
 	if err != nil {
 		return nil, err
 	}
-	//PthSep := string(os.PathSeparator)
 	suffix = strings.ToUpper(suffix)
 	for _, fi := range dir {
 		if fi.IsDir() {
