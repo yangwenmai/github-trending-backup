@@ -21,7 +21,7 @@ var tempDate = time.Now().Format("2006-01-02")
 func main() {
 	//loop
 	//for {
-	if time.Now().Day() == 10 {
+	if time.Now().Day() == 3 {
 		if ok, _ := collectDocs(); ok {
 			fmt.Println("Collect the .md files: OK!")
 		}
