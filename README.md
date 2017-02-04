@@ -2,4 +2,4 @@
 
 We scrape the github trending page of these languages: go, python, javascript, swift, objective-c, ruby, and push a markdown result everyday.
 
-Last Updated: 2017-02-03 16:50:28
+Last Updated: 2017-02-04 09:08:48
