@@ -2,16 +2,14 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"os/exec"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
-
-	"regexp"
-
-	"fmt"
 
 	"github.com/PuerkitoBio/goquery"
 )
