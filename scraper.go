@@ -2,8 +2,9 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"io/ioutil"
+	"net/http"
+	"net/url"
 	"os"
 	"os/exec"
 	"regexp"
@@ -16,60 +17,95 @@ import (
 
 var tempDate = time.Now().Format("2006-01-02")
 
+// Alert type
+type Alert struct {
+	Title, Content, URL, Priority string
+}
+
+//SendAlert to send notification
+func (a *Alert) SendAlert(source, receiver string) {
+	data := url.Values{
+		"source":   {source},
+		"receiver": {receiver},
+		"title":    {a.Title},
+		"content":  {a.Content},
+		"url":      {a.URL},
+		"priority": {a.Priority},
+	}
+	resp, err := http.PostForm("https://api.alertover.com/v1/alert", data)
+	if err != nil {
+		println("alertover send massage error: ", err)
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode == 200 {
+		println("alertover send message success.")
+	}
+}
+
 func main() {
 	//loop
-	//for {
-	if time.Now().Day() == 10 {
-		if ok, err := collectDocs(); ok {
-			fmt.Println("Collect the .md files: OK!")
-		} else {
-			fmt.Println("collectDocs() is failed. ", err)
+	for {
+		if time.Now().Day() == 10 {
+			if ok, err := collectDocs(); ok {
+				println("Collect the .md files: OK!")
+			} else {
+				println("collectDocs() is failed. ", err)
+			}
 		}
+		//set monitor targets
+		targets := []string{"go", "python", "javascript", "swift", "objective-c", "ruby"}
+
+		var content, readme string
+		jobs := make(chan string, 10)
+		backs := make(chan string, 10)
+
+		for w := 1; w <= 6; w++ {
+			go scrape(jobs, backs)
+		}
+
+		for j := 0; j < len(targets); j++ {
+			println(targets[j] + " is added to jobs.")
+			jobs <- targets[j]
+		}
+
+		for a := 0; a < len(targets); a++ {
+			content = content + <-backs
+		}
+		content = "### " + tempDate + "\n" + content
+		//close the channels
+		close(jobs)
+		close(backs)
+
+		//create markdown file
+		writeMarkDown(tempDate, content)
+		println(tempDate + ".md is completed.")
+
+		readme = "# Scraper\n\nWe scrape the github trending page of these languages: "
+		for _, v := range targets {
+			readme = readme + v + ", "
+		}
+		readme = readme + "and push a markdown result everyday.\n\n"
+		readme = readme + "Last Updated: " + time.Now().Format("2006-01-02 15:04:05")
+		writeMarkDown("README", readme)
+		println("README.md is updated.")
+
+		//gitPull()
+		gitAddAll()
+		gitCommit()
+		gitPush()
+
+		source := "s-4e12c729-0a0c-4491-bd1a-107de60e"
+		receiver := "u-fca8a4e9-1ba7-4e94-8fa5-fc2a934c"
+		alert := Alert{
+			Title:    "Ok",
+			Content:  tempDate + ".md is completed.",
+			URL:      "https://github.com/henson/Scraper",
+			Priority: "0", //优先级：0 普通，1 紧急
+		}
+		alert.SendAlert(source, receiver)
+
+		time.Sleep(time.Duration(24) * time.Hour)
 	}
-	//set monitor targets
-	targets := []string{"go", "python", "javascript", "swift", "objective-c", "ruby"}
-
-	var content, readme string
-	jobs := make(chan string, 10)
-	backs := make(chan string, 10)
-
-	for w := 1; w <= 6; w++ {
-		go scrape(jobs, backs)
-	}
-
-	for j := 0; j < len(targets); j++ {
-		println(targets[j] + " is added to jobs.")
-		jobs <- targets[j]
-	}
-
-	for a := 0; a < len(targets); a++ {
-		content = content + <-backs
-	}
-	content = "### " + tempDate + "\n" + content
-	//close the channels
-	close(jobs)
-	close(backs)
-
-	//create markdown file
-	writeMarkDown(tempDate, content)
-	println(tempDate + ".md is completed.")
-
-	readme = "# Scraper\n\nWe scrape the github trending page of these languages: "
-	for _, v := range targets {
-		readme = readme + v + ", "
-	}
-	readme = readme + "and push a markdown result everyday.\n\n"
-	readme = readme + "Last Updated: " + time.Now().Format("2006-01-02 15:04:05")
-	writeMarkDown("README", readme)
-	println("README.md is updated.")
-
-	//gitPull()
-	gitAddAll()
-	gitCommit()
-	gitPush()
-
-	//	time.Sleep(time.Duration(24) * time.Hour)
-	//}
 }
 
 //collectDocs
