@@ -100,7 +100,7 @@ func main() {
 			Title:    "Ok",
 			Content:  tempDate + ".md is completed.",
 			URL:      "https://github.com/henson/Scraper",
-			Priority: "0", //优先级：0 普通，1 紧急
+			Priority: "1", //优先级：0 普通，1 紧急
 		}
 		alert.SendAlert(source, receiver)
 
