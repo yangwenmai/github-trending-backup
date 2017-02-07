@@ -89,7 +89,7 @@ func main() {
 		writeMarkDown("README", readme)
 		println("README.md is updated.")
 
-		//gitPull()
+		gitPull()
 		gitAddAll()
 		gitCommit()
 		gitPush()
