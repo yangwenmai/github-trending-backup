@@ -15,7 +15,7 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-var tempDate = time.Now().Format("2006-01-02")
+var tempDate string
 
 // Alert type
 type Alert struct {
@@ -45,11 +45,13 @@ func (a *Alert) SendAlert(source, receiver string) {
 func main() {
 	//loop
 	for {
+		tempDate = time.Now().Format("2006-01-02")
+		message := ""
 		if time.Now().Day() == 10 {
 			if ok, err := collectDocs(); ok {
-				println("Collect the .md files: OK!")
+				message += "Collect the *.md files: OK!\n"
 			} else {
-				println("collectDocs() is failed. ", err)
+				message += "collectDocs() is failed. " + err.Error() + "\n"
 			}
 		}
 		//set monitor targets
@@ -78,7 +80,7 @@ func main() {
 
 		//create markdown file
 		writeMarkDown(tempDate, content)
-		println(tempDate + ".md is completed.")
+		message += tempDate + ".md is completed.\n"
 
 		readme = "# Scraper\n\nWe scrape the github trending page of these languages: "
 		for _, v := range targets {
@@ -98,7 +100,7 @@ func main() {
 		receiver := "u-fca8a4e9-1ba7-4e94-8fa5-fc2a934c"
 		alert := Alert{
 			Title:    "Ok",
-			Content:  tempDate + ".md is completed.",
+			Content:  message,
 			URL:      "https://github.com/henson/Scraper",
 			Priority: "1", //优先级：0 普通，1 紧急
 		}
@@ -128,7 +130,7 @@ func collectDocs() (ok bool, err error) {
 			mdNewFiles = append(mdNewFiles, v)
 		}
 	}
-	err = os.MkdirAll(docName, 0666)
+	err = os.MkdirAll(docName, os.ModePerm) //os.ModePerm 0777
 	if err != nil {
 		return false, err
 	}
