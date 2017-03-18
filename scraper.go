@@ -19,14 +19,20 @@ var tempDate string
 
 // Alert type
 type Alert struct {
-	Title, Content, URL, Priority string
+	Title, Content, URL, Priority, Source, Receiver string
 }
 
 //SendAlert to send notification
-func (a *Alert) SendAlert(source, receiver string) {
+func (a *Alert) SendAlert() {
+	defer func() {
+		if r := recover(); r != nil {
+			println("Recovered for", r)
+			a.SendAlert()
+		}
+	}()
 	data := url.Values{
-		"source":   {source},
-		"receiver": {receiver},
+		"source":   {a.Source},
+		"receiver": {a.Receiver},
 		"title":    {a.Title},
 		"content":  {a.Content},
 		"url":      {a.URL},
@@ -34,7 +40,8 @@ func (a *Alert) SendAlert(source, receiver string) {
 	}
 	resp, err := http.PostForm("https://api.alertover.com/v1/alert", data)
 	if err != nil {
-		println("alertover send massage error: ", err)
+		println("alertover send message failure...")
+		panic(err)
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode == 200 {
@@ -96,15 +103,16 @@ func main() {
 		gitCommit()
 		gitPush()
 
-		source := "s-4e12c729-0a0c-4491-bd1a-107de60e"
-		receiver := "u-fca8a4e9-1ba7-4e94-8fa5-fc2a934c"
 		alert := Alert{
+			Source:   "s-4e12c729-0a0c-4491-bd1a-107de60e",
+			Receiver: "u-fca8a4e9-1ba7-4e94-8fa5-fc2a934c",
 			Title:    "Ok",
 			Content:  message,
 			URL:      "https://github.com/henson/Scraper",
-			Priority: "1", //优先级：0 普通，1 紧急
+			Priority: "0", //优先级：0 普通，1 紧急
 		}
-		alert.SendAlert(source, receiver)
+
+		alert.SendAlert()
 
 		time.Sleep(time.Duration(24) * time.Hour)
 	}
@@ -278,7 +286,7 @@ func gitCommit() {
 	app := "git"
 	arg0 := "commit"
 	arg1 := "-am"
-	arg2 := tempDate
+	arg2 := time.Now().Format("2006-01-02 15:04:05")
 	cmd := exec.Command(app, arg0, arg1, arg2)
 	out, err := cmd.Output()
 
