@@ -94,6 +94,7 @@ func main() {
 			readme = readme + v + ", "
 		}
 		readme = readme + "and push a markdown result everyday.\n\n"
+		readme = readme + "[" + tempDate + ".md](https://github.com/henson/Scraper/blob/master/" + tempDate + ".md)\n\n"
 		readme = readme + "Last Updated: " + time.Now().Format("2006-01-02 15:04:05")
 		writeMarkDown("README", readme)
 		println("README.md is updated.")
@@ -234,12 +235,12 @@ func scrape(jobs chan string, backs chan<- string) {
 			url = "https://github.com" + url
 			var stars = "0"
 			var forks = "0"
-			s.Find("div.f6.text-gray.mt-2 a.muted-link.tooltipped.tooltipped-s.mr-3").Each(func(i int, contentSelection *goquery.Selection) {
-				if temp, ok := contentSelection.Attr("aria-label"); ok {
+			s.Find("a.muted-link.mr-3").Each(func(i int, contentSelection *goquery.Selection) {
+				if temp, ok := contentSelection.Find("svg").Attr("aria-label"); ok {
 					switch temp {
-					case "Stargazers":
+					case "star":
 						stars = contentSelection.Text()
-					case "Forks":
+					case "fork":
 						forks = contentSelection.Text()
 					}
 				}
