@@ -54,7 +54,7 @@ func main() {
 	for {
 		tempDate = time.Now().Format("2006-01-02")
 		message := ""
-		if time.Now().Day() == 15 {
+		if time.Now().Day() == 10 {
 			if ok, err := collectDocs(); ok {
 				message += "Collect the *.md files: OK!\n"
 			} else {
