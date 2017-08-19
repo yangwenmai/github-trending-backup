@@ -105,8 +105,9 @@ func main() {
 		gitPush()
 
 		alert := Alert{
-			Source:   "s-4e12c729-0a0c-4491-bd1a-107de60e",
-			Receiver: "u-fca8a4e9-1ba7-4e94-8fa5-fc2a934c",
+		//Get your unique ID from https://www.alertover.com to replace "xxxxxxxx" below
+			Source:   "xxxxxxxx",
+			Receiver: "xxxxxxxx",
 			Title:    "Ok",
 			Content:  message,
 			URL:      "https://github.com/henson/Scraper",
