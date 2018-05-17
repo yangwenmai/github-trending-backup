@@ -4,4 +4,4 @@ We scrape the github trending page of these languages: Go, Java, C, C++, C#, R, 
 
 [2018-05-18.md](https://github.com/yangwenmai/Scraper/blob/master/2018-05-18.md)
 
-Last Updated: 2018-05-18 02:48:30
+Last Updated: 2018-05-18 02:52:15
