@@ -62,7 +62,7 @@ func main() {
 			}
 		}
 		//set monitor targets
-		targets := []string{"go", "python", "javascript", "swift", "objective-c", "ruby"}
+		targets := []string{"Go", "Java", "C", "C++", "C#", "R", "CSS", "HTML", "Shell", "Dockerfile", "Rust", "Python", "Vue", "JavaScript", "TypeScript", "Markdown", "Lua", "Scala", "SQL", "Swift", "Objective-C", "Ruby"}
 
 		var content, readme string
 		jobs := make(chan string, 10)
@@ -94,7 +94,7 @@ func main() {
 			readme = readme + v + ", "
 		}
 		readme = readme + "and push a markdown result everyday.\n\n"
-		readme = readme + "[" + tempDate + ".md](https://github.com/henson/Scraper/blob/master/" + tempDate + ".md)\n\n"
+		readme = readme + "[" + tempDate + ".md](https://github.com/yangwenmai/Scraper/blob/master/" + tempDate + ".md)\n\n"
 		readme = readme + "Last Updated: " + time.Now().Format("2006-01-02 15:04:05")
 		writeMarkDown("README", readme)
 		println("README.md is updated.")

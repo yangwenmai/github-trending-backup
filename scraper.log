@@ -12,3 +12,65 @@ javascript is responsed to backs.
 go is responsed to backs.
 README.md is updated.
 Already up to date.
+[master 8b8a8be] 2018-05-18 02:35:18
+ 48 files changed, 13150 insertions(+), 2 deletions(-)
+ create mode 100644 2018-05-18.md
+ create mode 100644 Dockerfile
+ create mode 100644 Gopkg.lock
+ create mode 100644 Gopkg.toml
+ create mode 100644 docker-compose.yaml
+ create mode 100644 scraper.log
+ create mode 100644 vendor/github.com/PuerkitoBio/goquery/.gitattributes
+ create mode 100644 vendor/github.com/PuerkitoBio/goquery/.gitignore
+ create mode 100644 vendor/github.com/PuerkitoBio/goquery/.travis.yml
+ create mode 100644 vendor/github.com/PuerkitoBio/goquery/LICENSE
+ create mode 100644 vendor/github.com/PuerkitoBio/goquery/README.md
+ create mode 100644 vendor/github.com/PuerkitoBio/goquery/array.go
+ create mode 100644 vendor/github.com/PuerkitoBio/goquery/doc.go
+ create mode 100644 vendor/github.com/PuerkitoBio/goquery/expand.go
+ create mode 100644 vendor/github.com/PuerkitoBio/goquery/filter.go
+ create mode 100644 vendor/github.com/PuerkitoBio/goquery/iteration.go
+ create mode 100644 vendor/github.com/PuerkitoBio/goquery/manipulation.go
+ create mode 100644 vendor/github.com/PuerkitoBio/goquery/property.go
+ create mode 100644 vendor/github.com/PuerkitoBio/goquery/query.go
+ create mode 100644 vendor/github.com/PuerkitoBio/goquery/traversal.go
+ create mode 100644 vendor/github.com/PuerkitoBio/goquery/type.go
+ create mode 100644 vendor/github.com/PuerkitoBio/goquery/utilities.go
+ create mode 100644 vendor/github.com/andybalholm/cascadia/.travis.yml
+ create mode 100755 vendor/github.com/andybalholm/cascadia/LICENSE
+ create mode 100644 vendor/github.com/andybalholm/cascadia/README.md
+ create mode 100644 vendor/github.com/andybalholm/cascadia/go.mod
+ create mode 100644 vendor/github.com/andybalholm/cascadia/parser.go
+ create mode 100644 vendor/github.com/andybalholm/cascadia/selector.go
+ create mode 100644 vendor/golang.org/x/net/AUTHORS
+ create mode 100644 vendor/golang.org/x/net/CONTRIBUTORS
+ create mode 100644 vendor/golang.org/x/net/LICENSE
+ create mode 100644 vendor/golang.org/x/net/PATENTS
+ create mode 100644 vendor/golang.org/x/net/html/atom/atom.go
+ create mode 100644 vendor/golang.org/x/net/html/atom/gen.go
+ create mode 100644 vendor/golang.org/x/net/html/atom/table.go
+ create mode 100644 vendor/golang.org/x/net/html/const.go
+ create mode 100644 vendor/golang.org/x/net/html/doc.go
+ create mode 100644 vendor/golang.org/x/net/html/doctype.go
+ create mode 100644 vendor/golang.org/x/net/html/entity.go
+ create mode 100644 vendor/golang.org/x/net/html/escape.go
+ create mode 100644 vendor/golang.org/x/net/html/foreign.go
+ create mode 100644 vendor/golang.org/x/net/html/node.go
+ create mode 100644 vendor/golang.org/x/net/html/parse.go
+ create mode 100644 vendor/golang.org/x/net/html/render.go
+ create mode 100644 vendor/golang.org/x/net/html/token.go
+alertover send message success.
+go is added to jobs.
+python is added to jobs.
+javascript is added to jobs.
+swift is added to jobs.
+objective-c is added to jobs.
+ruby is added to jobs.
+go is responsed to backs.
+objective-c is responsed to backs.
+python is responsed to backs.
+javascript is responsed to backs.
+ruby is responsed to backs.
+swift is responsed to backs.
+README.md is updated.
+Already up to date.
