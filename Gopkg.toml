@@ -24,6 +24,12 @@
 #   go-tests = true
 #   unused-packages = true
 
+[metadata.heroku]
+  root-package = "github.com/yangwenmai/Scraper"
+  go-version = "1.10.2"
+  install = [ "./..." ]
+  ensure = false
+
 
 [[constraint]]
   name = "github.com/PuerkitoBio/goquery"
