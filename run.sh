@@ -1,3 +1,2 @@
 #/bin/sh
-go install ./...
 ./Scraper
