@@ -51,73 +51,73 @@ func (a *Alert) SendAlert() {
 
 func main() {
 	//loop
-	for {
-		tempDate = time.Now().Format("2006-01-02")
-		message := ""
-		if time.Now().Day() == 10 {
-			if ok, err := collectDocs(); ok {
-				message += "Collect the *.md files: OK!\n"
-			} else {
-				message += "collectDocs() is failed. " + err.Error() + "\n"
-			}
+	// for {
+	tempDate = time.Now().Format("2006-01-02")
+	message := ""
+	if time.Now().Day() == 10 {
+		if ok, err := collectDocs(); ok {
+			message += "Collect the *.md files: OK!\n"
+		} else {
+			message += "collectDocs() is failed. " + err.Error() + "\n"
 		}
-		//set monitor targets
-		targets := []string{"Go", "Java", "C", "C++", "C#", "R", "CSS", "HTML", "Shell", "Dockerfile", "Rust", "Python", "Vue", "JavaScript", "TypeScript", "Markdown", "Lua", "Scala", "SQL", "Swift", "Objective-C", "Ruby"}
-
-		var content, readme string
-		jobs := make(chan string, 10)
-		backs := make(chan string, 10)
-
-		for w := 1; w <= 6; w++ {
-			go scrape(jobs, backs)
-		}
-
-		for j := 0; j < len(targets); j++ {
-			println(targets[j] + " is added to jobs.")
-			jobs <- targets[j]
-		}
-
-		for a := 0; a < len(targets); a++ {
-			content = content + <-backs
-		}
-		content = "### " + tempDate + "\n" + content
-		//close the channels
-		close(jobs)
-		close(backs)
-
-		//create markdown file
-		writeMarkDown(tempDate, content)
-		message += tempDate + ".md is completed.\n"
-
-		readme = "# Scraper\n\nWe scrape the github trending page of these languages: "
-		for _, v := range targets {
-			readme = readme + v + ", "
-		}
-		readme = readme + "and push a markdown result everyday.\n\n"
-		readme = readme + "[" + tempDate + ".md](https://github.com/yangwenmai/Scraper/blob/master/" + tempDate + ".md)\n\n"
-		readme = readme + "Last Updated: " + time.Now().Format("2006-01-02 15:04:05")
-		writeMarkDown("README", readme)
-		println("README.md is updated.")
-
-		gitPull()
-		gitAddAll()
-		gitCommit()
-		gitPush()
-
-		alert := Alert{
-			//Get your unique ID from https://www.alertover.com to replace "xxxxxxxx" below
-			Source:   "u-2d71bf8d-c60c-40af-944e-60d120f2",
-			Receiver: "u-2d71bf8d-c60c-40af-944e-60d120f2",
-			Title:    "Ok",
-			Content:  message,
-			URL:      "https://github.com/yangwenmai/Scraper",
-			Priority: "0", //优先级：0 普通，1 紧急
-		}
-
-		alert.SendAlert()
-
-		time.Sleep(time.Duration(24) * time.Hour)
 	}
+	//set monitor targets
+	targets := []string{"Go", "Java", "CSS", "HTML", "Rust", "Python", "Vue", "JavaScript", "TypeScript", "Objective-C"}
+
+	var content, readme string
+	jobs := make(chan string, 10)
+	backs := make(chan string, 10)
+
+	for w := 1; w <= 6; w++ {
+		go scrape(jobs, backs)
+	}
+
+	for j := 0; j < len(targets); j++ {
+		println(targets[j] + " is added to jobs.")
+		jobs <- targets[j]
+	}
+
+	for a := 0; a < len(targets); a++ {
+		content = content + <-backs
+	}
+	content = "### " + tempDate + "\n" + content
+	//close the channels
+	close(jobs)
+	close(backs)
+
+	//create markdown file
+	writeMarkDown(tempDate, content)
+	message += tempDate + ".md is completed.\n"
+
+	readme = "# Scraper\n\nWe scrape the github trending page of these languages: "
+	for _, v := range targets {
+		readme = readme + v + ", "
+	}
+	readme = readme + "and push a markdown result everyday.\n\n"
+	readme = readme + "[" + tempDate + ".md](https://github.com/yangwenmai/Scraper/blob/master/" + tempDate + ".md)\n\n"
+	readme = readme + "Last Updated: " + time.Now().Format("2006-01-02 15:04:05")
+	writeMarkDown("README", readme)
+	println("README.md is updated.")
+
+	// gitPull()
+	// gitAddAll()
+	// gitCommit()
+	// gitPush()
+
+	alert := Alert{
+		//Get your unique ID from https://www.alertover.com to replace "xxxxxxxx" below
+		Source:   "u-2d71bf8d-c60c-40af-944e-60d120f2",
+		Receiver: "u-2d71bf8d-c60c-40af-944e-60d120f2",
+		Title:    "Ok",
+		Content:  message,
+		URL:      "https://github.com/yangwenmai/Scraper",
+		Priority: "0", //优先级：0 普通，1 紧急
+	}
+
+	alert.SendAlert()
+
+	// time.Sleep(time.Duration(24) * time.Hour)
+	// }
 }
 
 //collectDocs
