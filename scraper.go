@@ -104,17 +104,17 @@ func main() {
 	// gitCommit()
 	// gitPush()
 
-	alert := Alert{
-		//Get your unique ID from https://www.alertover.com to replace "xxxxxxxx" below
-		Source:   "u-2d71bf8d-c60c-40af-944e-60d120f2",
-		Receiver: "u-2d71bf8d-c60c-40af-944e-60d120f2",
-		Title:    "Ok",
-		Content:  message,
-		URL:      "https://github.com/yangwenmai/Scraper",
-		Priority: "0", //优先级：0 普通，1 紧急
-	}
+	// alert := Alert{
+	// 	//Get your unique ID from https://www.alertover.com to replace "xxxxxxxx" below
+	// 	Source:   "u-2d71bf8d-c60c-40af-944e-60d120f2",
+	// 	Receiver: "u-2d71bf8d-c60c-40af-944e-60d120f2",
+	// 	Title:    "Ok",
+	// 	Content:  message,
+	// 	URL:      "https://github.com/yangwenmai/Scraper",
+	// 	Priority: "0", //优先级：0 普通，1 紧急
+	// }
 
-	alert.SendAlert()
+	// alert.SendAlert()
 
 	// time.Sleep(time.Duration(24) * time.Hour)
 	// }
@@ -229,11 +229,11 @@ func scrape(jobs chan string, backs chan<- string) {
 			panic(language)
 		}
 
-		doc.Find("ol.repo-list li").Each(func(i int, s *goquery.Selection) {
-			title := s.Find("h3 a").Text()
+		doc.Find(".Box-row").Each(func(i int, s *goquery.Selection) {
 			description := s.Find("p.col-9").Text()
-			url, _ := s.Find("h3 a").Attr("href")
-			url = "https://github.com" + url
+			repoURL, _ := s.Find("h1 a").Attr("href")
+			title := repoURL[1:]
+			url := "https://github.com" + repoURL
 			var stars = "0"
 			var forks = "0"
 			s.Find("a.muted-link.mr-3").Each(func(i int, contentSelection *goquery.Selection) {
@@ -241,7 +241,7 @@ func scrape(jobs chan string, backs chan<- string) {
 					switch temp {
 					case "star":
 						stars = contentSelection.Text()
-					case "fork":
+					case "repo-forked":
 						forks = contentSelection.Text()
 					}
 				}
