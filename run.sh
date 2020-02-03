@@ -4,6 +4,6 @@ echo $date_time
 ./Scraper
 
 git add .
-git commit -m "docs: update $date_time trending"
-#git push origin master
+git commit -m "docs: update Github trending in $date_time"
+git push origin master
 
