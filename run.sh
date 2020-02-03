@@ -1,5 +1,5 @@
 #! /bin/sh
-date_time=`date +%Y-%m-%d %H:%M:%S`
+date_time=`date "+%G-%m-%d %H:%M:%S"`
 echo $date_time
 ./Scraper
 
