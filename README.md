@@ -2,6 +2,6 @@
 
 We scrape the github trending page of these languages: Go, Java, CSS, HTML, Rust, Python, Vue, JavaScript, TypeScript, Objective-C, and push a markdown result everyday.
 
-[2020-02-24.md](https://github.com/yangwenmai/Scraper/blob/master/2020-02-24.md)
+[2020-02-25.md](https://github.com/yangwenmai/Scraper/blob/master/2020-02-25.md)
 
-Last Updated: 2020-02-24 08:37:59
+Last Updated: 2020-02-25 09:21:46
