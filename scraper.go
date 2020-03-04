@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -62,7 +63,15 @@ func main() {
 		}
 	}
 	//set monitor targets
-	targets := []string{"Go", "Java", "CSS", "HTML", "Rust", "Python", "Vue", "JavaScript", "TypeScript", "Objective-C"}
+	targets := []string{
+		"Go", "Rust", "Python", "Ruby",
+		"C++", "C", "Java",
+		"Shell", "Makefile",
+		"Swift", "Objective-C", "Kotlin",
+		"Jupyter-Notebook",
+		"HTML", "JavaScript", "TypeScript", "CSS", "Vue",
+		"TeX",
+		"Markdown"}
 
 	var content, readme string
 	jobs := make(chan string, 10)
@@ -246,7 +255,7 @@ func scrape(jobs chan string, backs chan<- string) {
 					}
 				}
 			})
-			result = result + "* [" + strings.Replace(strings.TrimSpace(title), " ", "", -1) + " (" + strings.TrimSpace(stars) + "s/" + strings.TrimSpace(forks) + "f)](" + url + ") : " + strings.TrimSpace(description) + "\n"
+			result = result + fmt.Sprintf("%d.", i+1) + " [" + strings.Replace(strings.TrimSpace(title), " ", "", -1) + " (" + strings.TrimSpace(stars) + "s/" + strings.TrimSpace(forks) + "f)](" + url + ") : " + strings.TrimSpace(description) + "\n"
 		})
 		println(language + " is responsed to backs.")
 		backs <- result
