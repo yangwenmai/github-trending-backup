@@ -103,7 +103,7 @@ func main() {
 		readme = readme + v + ", "
 	}
 	readme = readme + "and push a markdown result everyday.\n\n"
-	readme = readme + "[" + tempDate + ".md](https://github.com/yangwenmai/Scraper/blob/master/" + tempDate + ".md)\n\n"
+	readme = readme + "[" + tempDate + ".md](https://github.com/yangwenmai/github-trending-backup/blob/master/" + tempDate + ".md)\n\n"
 	readme = readme + "Last Updated: " + time.Now().Format("2006-01-02 15:04:05")
 	writeMarkDown("README", readme)
 	println("README.md is updated.")
@@ -119,7 +119,7 @@ func main() {
 	// 	Receiver: "u-2d71bf8d-c60c-40af-944e-60d120f2",
 	// 	Title:    "Ok",
 	// 	Content:  message,
-	// 	URL:      "https://github.com/yangwenmai/Scraper",
+	// 	URL:      "https://github.com/yangwenmai/github-trending-backup",
 	// 	Priority: "0", //优先级：0 普通，1 紧急
 	// }
 
