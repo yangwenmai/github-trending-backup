@@ -4,4 +4,4 @@ We scrape the github trending page of these languages: Go, Rust, Python, Ruby, C
 
 [2020-09-15.md](https://github.com/yangwenmai/github-trending-backup/blob/master/2020-09-15.md)
 
-Last Updated: 2020-09-15 16:25:27
+Last Updated: 2020-09-15 18:15:15
