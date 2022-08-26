@@ -237,7 +237,6 @@ func scrape(jobs chan string, backs chan<- string) {
 			println("Error:", e.Error())
 			panic(language)
 		}
-
 		doc.Find(".Box-row").Each(func(i int, s *goquery.Selection) {
 			description := s.Find("p.col-9").Text()
 			repoURL, _ := s.Find("h1 a").Attr("href")
@@ -245,12 +244,12 @@ func scrape(jobs chan string, backs chan<- string) {
 			url := "https://github.com" + repoURL
 			var stars = "0"
 			var forks = "0"
-			s.Find("a.muted-link.mr-3").Each(func(i int, contentSelection *goquery.Selection) {
+			s.Find("a.Link--muted.d-inline-block.mr-3").Each(func(i int, contentSelection *goquery.Selection) {
 				if temp, ok := contentSelection.Find("svg").Attr("aria-label"); ok {
 					switch temp {
 					case "star":
 						stars = contentSelection.Text()
-					case "repo-forked":
+					case "fork":
 						forks = contentSelection.Text()
 					}
 				}
