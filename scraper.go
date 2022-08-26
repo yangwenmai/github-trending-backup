@@ -233,7 +233,7 @@ func scrape(jobs chan string, backs chan<- string) {
 		var e error
 		result := "\n#### " + language + "\n"
 
-		if doc, e = goquery.NewDocument("https://github.com/trending?l=" + language); e != nil {
+		if doc, e = goquery.NewDocument("https://github.com/trending?l=go"); e != nil {
 			println("Error:", e.Error())
 			panic(language)
 		}
