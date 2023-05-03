@@ -27,7 +27,7 @@ type Alert struct {
 func (a *Alert) SendAlert() {
 	defer func() {
 		if r := recover(); r != nil {
-			println("Recovered for", r)
+			println("SendAlert Recovered for", r)
 			a.SendAlert()
 		}
 	}()
@@ -222,7 +222,7 @@ func writeMarkDown(fileName, content string) {
 func scrape(jobs chan string, backs chan<- string) {
 	defer func() {
 		if r := recover(); r != nil {
-			println("Recovered for", interface2string(r))
+			println("scrape Recovered for", interface2string(r))
 			jobs <- interface2string(r)
 			go scrape(jobs, backs)
 		}
@@ -233,13 +233,13 @@ func scrape(jobs chan string, backs chan<- string) {
 		var e error
 		result := "\n#### " + language + "\n"
 
-		if doc, e = goquery.NewDocument("https://github.com/trending?l=go"); e != nil {
+		if doc, e = goquery.NewDocument("https://github.com/trending?l="+language); e != nil {
 			println("Error:", e.Error())
 			panic(language)
 		}
 		doc.Find(".Box-row").Each(func(i int, s *goquery.Selection) {
 			description := s.Find("p.col-9").Text()
-			repoURL, _ := s.Find("h1 a").Attr("href")
+			repoURL, _ := s.Find("h2 a").Attr("href")
 			title := repoURL[1:]
 			url := "https://github.com" + repoURL
 			var stars = "0"
