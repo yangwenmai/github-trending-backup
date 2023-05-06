@@ -4,7 +4,7 @@ github.com/PuerkitoBio/goquery
 # github.com/andybalholm/cascadia v1.0.0
 ## explicit
 github.com/andybalholm/cascadia
-# golang.org/x/net v0.0.0-20180511174649-2491c5de3490
-## explicit
+# golang.org/x/net v0.7.0
+## explicit; go 1.17
 golang.org/x/net/html
 golang.org/x/net/html/atom
