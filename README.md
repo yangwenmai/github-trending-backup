@@ -2,6 +2,6 @@
 
 We scrape the github trending page of these languages: Go, Rust, Python, Ruby, C++, C, Java, Shell, Makefile, Swift, Objective-C, Kotlin, Jupyter-Notebook, HTML, JavaScript, TypeScript, CSS, Vue, TeX, Markdown, and push a markdown result everyday.
 
-[2023-09-19.md](https://github.com/yangwenmai/github-trending-backup/blob/master/2023-09-19.md)
+[2023-09-20.md](https://github.com/yangwenmai/github-trending-backup/blob/master/2023-09-20.md)
 
-Last Updated: 2023-09-19 04:00:06
+Last Updated: 2023-09-20 04:00:05
